@@ -32,7 +32,7 @@ public class PlayerController : MonoBehaviour
         float currentMoveSpeed = player.MoveSpeed * CONVERT_UNIT_VALUE;
         LookAt();
         rigidbody.velocity = direction * currentMoveSpeed + Vector3.up * rigidbody.velocity.y;
-        // Debug.Log(direction);
+         //Debug.Log(direction);
         // Debug.Log(Vector3.up);
         // Debug.Log(rigidbody.velocity.y);
     }
