@@ -11,6 +11,12 @@ public class PlayerController : MonoBehaviour
     protected Animator animator;
     protected const float DEFAULT_CONVERT_MOVESPEED = 3f;
     protected const float DEFAULT_ANIMATION_PLAYSPEED = 0.9f;
+
+    private const float RAY_DISTANCE = 2f;
+    private float maxSlopeAngle;
+    private RaycastHit slopeHit;
+    private int groundLayer = 1 << LayerMask.NameToLayer("Ground"); //땅만 레이어를 체크한다.
+    
     protected Player player;
     public Vector3 direction { get; private set; }
 
@@ -65,5 +71,17 @@ public class PlayerController : MonoBehaviour
     private void FixedUpdate()
     {
         Move();
+    }
+    
+    
+    public bool IsOnSlope()
+    {
+        Ray ray = new Ray(transform.position, Vector3.down);
+        if(Physics.Raycast(ray, out slopeHit, RAY_DISTANCE, groundLayer))
+        {
+            var angle = Vector3.Angle(Vector3.up, slopeHit.normal);
+            return angle != 0f && angle < maxSlopeAngle;  //maxSlopeAngle의 정체를 아직도 모르곘다 계속해서 고민해보자
+        }
+        return false;
     }
 }
